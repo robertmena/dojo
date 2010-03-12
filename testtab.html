@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr">
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/tundra/tundra.css">
+		<style type="text/css">
+
+			form {
+				background-color: #FFFFFF;
+				border: 1px solid #CCCCCC;
+
+				margin: 10px;
+				padding: 10px 5px 5px 5px;
+			}
+
+			.tundra .dijitTabPaneWrapper .dijitCheckBox {
+				position: relative;
+				top: 20px;
+				left: 5px;
+			}
+
+		</style>
+    </head>
+
+    <body class="tundra ">
+
+        <div style="width: 550px; height: 300px">
+            <div dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%;" id="general" tabPosition="top">
+
+                <!-- CREDIT CARDS  -->
+                <div dojoType="dijit.layout.ContentPane" title="Payment Options" selected="true" id="paymentOptions">
+
+                    <!-- credit cards -->
+		    <div dojoType="dijit.layout.TabContainer" style="width: 80%; height: 80%;" id="tabContainer" tabPosition="left">
+
+		        <div dojoType="dijit.layout.ContentPane" title="Visa" selected="true" id="visa">
+		            <div dojoType="dijit.form.Form" id="visa_form">
+		            	<button type="button" dojoType="dijit.form.Button" id="button1">Button 1</button>
+				<br>
+		            	<select dojoType="dijit.form.ComboBox">
+                                    <option>Apples</option>
+                                    <option selected>Oranges</option>
+                                    <option>Pears</option>
+				</select>
+		            </div>
+		        </div>
+
+		        <div dojoType="dijit.layout.ContentPane" title="Mastercard" id="mastercard">
+                            <div dojoType="dijit.form.Form" id="mastercard_form">
+                                <button type="button" dojoType="dijit.form.Button" id="button2">Button 2</button>
+				<br>
+                                <select dojoType="dijit.form.ComboBox">
+                                    <option>Lexus</option>
+                                    <option selected>Mercedes</option>
+                                    <option>BMW</option>
+                                </select>
+                            </div>
+		        </div>
+
+		        <div dojoType="dijit.layout.ContentPane" title="American Express" id="american">
+		            <div dojoType="dijit.form.Form" id="american_form">
+                                <button type="button" dojoType="dijit.form.Button" id="button3">Button 3</button>
+                                <br>
+                                <select dojoType="dijit.form.ComboBox">
+                                    <option>Dojo</option>
+                                    <option selected>Dijit</option>
+                                    <option>Dojox</option>
+                                </select>
+                            </div>
+		        </div>
+
+		    </div>
+
+		</div>
+
+                <!-- Delivery Address -->
+                <div dojoType="dijit.layout.ContentPane" title="Delivery Address" selected="false" id="deliveryAddress">
+                    hello
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js" djConfig="parseOnLoad: true">
+    </script>
+
+    <script type="text/javascript">
+    	dojo.require("dijit.form.Button");
+    	dojo.require("dijit.form.CheckBox");
+        dojo.require("dijit.form.ComboBox");
+        dojo.require("dijit.form.Form");
+
+    	dojo.require("dijit.layout.TabContainer");
+        dojo.require("dijit.layout.ContentPane");
+        dojo.addOnLoad(function()
+        {
+
+            // Add Visa
+            var cbVisa = new dijit.form.CheckBox({
+                checked: true,
+                onChange: function(b)
+                {
+                    toggleForm(dijit.byId('visa_form'), b);
+                }
+            });
+
+            // Putting the checkbox
+            cbVisa.placeAt("tabContainer_tablist_visa", "first");
+
+            // Adding Mastercard
+            var cbMastercard = new dijit.form.CheckBox({
+                checked: false,
+                onChange: function(b)
+                {
+                    toggleForm(dijit.byId('mastercard_form'), b);
+                }
+            });
+
+            // Disabling
+            toggleForm(dijit.byId('mastercard_form'), false);
+
+            // Putting the checkbox
+            cbMastercard.placeAt("tabContainer_tablist_mastercard", "first");
+
+            // Adding American
+            var cbAmerican = new dijit.form.CheckBox({
+                checked: false,
+                onChange: function(b)
+                {
+                    toggleForm(dijit.byId('american_form'), b);
+                }
+            });
+
+            // Disabling
+            toggleForm(dijit.byId('american_form'), false);
+
+            // Putting the checkbox
+            cbAmerican.placeAt("tabContainer_tablist_american", "first");
+
+            // Might need to resize now we've changed the size of the tabs
+            dijit.byId("tabContainer").resize();
+            dijit.byId("paymentOptions").resize();
+            dijit.byId("general").resize();
+        });
+
+        function toggleForm(form, status)
+        {
+            form.getChildren().forEach(function(d)
+            {
+                dijit.byId(d.id).attr("disabled", !status);
+                dojo.style(form.domNode, "backgroundColor", (status ? "#FFFFFF" : "#EEEEFE"));
+            });
+        }
+    </script>
+
+</html>
